@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const CreateListing = () => {
+  const [geoLocationEnabled, setGeoLocationEnables] = useState(false);
   const [formData, setFormData] = useState({
     type: "rent",
     name: "",
@@ -14,6 +15,8 @@ const CreateListing = () => {
     regularPrice: "",
     discountPrice: 0,
     images: {},
+    latitude: 0,
+    longitude: 0,
   });
   const {
     type,
@@ -28,6 +31,8 @@ const CreateListing = () => {
     regularPrice,
     discountPrice,
     images,
+    latitude,
+    longitude,
   } = formData;
   const onChange = (e) => {
     let boolean = null;
@@ -195,6 +200,32 @@ const CreateListing = () => {
               required
             />
           </div>
+          {!geoLocationEnabled && (
+            <div className="w-full space-x-3 mb-6 flex ">
+              <div className="w-full">
+                <p className="text-xl font-semibold">Latitude</p>
+                <input
+                  type="number"
+                  id="latitude"
+                  className="w-full rounded-md text-xl"
+                  value={latitude}
+                  onChange={onChange}
+                />
+              </div>
+              <div className="w-full">
+                <p className="text-xl font-semibold">Longitude</p>
+                <input
+                  type="number"
+                  id="longitude"
+                  className="w-full rounded-md text-xl"
+                  value={longitude}
+                  onChange={onChange}
+                  min="-90"
+                  max="90"
+                />
+              </div>
+            </div>
+          )}
           <div className="mb-6">
             <p className="text-xl font-semibold mb-1">
               Description About Place
@@ -204,6 +235,8 @@ const CreateListing = () => {
               className="w-full rounded-md"
               id="description"
               onChange={onChange}
+              min="-180"
+              max="180"
               value={description}
               required
             />
